@@ -70,6 +70,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="crypting.cs" />
     <Compile Include="hwid.cs" />
     <Compile Include="rapid_auth.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

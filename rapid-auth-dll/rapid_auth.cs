@@ -12,7 +12,9 @@ namespace rapid_auth_dll
     public class rapid_auth
     {
         public static string API_KEY = "";
-        
+        public static string OPENSSL_KEY = "";
+
+
         public static string sign_in(string username, string password)
         {
             string response_string;
@@ -21,24 +23,24 @@ namespace rapid_auth_dll
             {
                 var values = new NameValueCollection();
                 values["api_key"] = API_KEY;
-                values["username"] = username;
-                values["password"] = password;
+                values["username"] = crypting.EncryptString(username);
+                values["password"] = crypting.EncryptString(password);
                 
                 //HWID
-                values["windows_username"] = Environment.UserName;
+                values["windows_username"] = crypting.EncryptString(Environment.UserName);
                 
-                values["gpu_name"] = hwid.gpu()[0];
+                values["gpu_name"] = crypting.EncryptString(hwid.gpu()[0]);
                 
-                values["gpu_ram"] = hwid.gpu()[1];
+                values["gpu_ram"] = crypting.EncryptString(hwid.gpu()[1]);
                 
-                values["drive_count"] = hwid.drive_count().ToString();
-                values["cpu_name"] = hwid.cpu()[0];
-                values["cpu_cores"] = hwid.cpu()[1];
-                values["os_caption"] = hwid.os_info()[0];
-                values["os_serial_number"] = hwid.os_info()[1];
+                values["drive_count"] = crypting.EncryptString(hwid.drive_count().ToString());
+                values["cpu_name"] = crypting.EncryptString(hwid.cpu()[0]);
+                values["cpu_cores"] = crypting.EncryptString(hwid.cpu()[1]);
+                values["os_caption"] = crypting.EncryptString(hwid.os_info()[0]);
+                values["os_serial_number"] = crypting.EncryptString(hwid.os_info()[1]);
 
                 
-                var response = client.UploadValues("https://www.rapid-auth.pro/rapid_auth_api/loader_users/sign_in.php", values);
+                var response = client.UploadValues("http://localhost/rapid_auth_api/loader_users/sign_in.php", values);
 
                 response_string = Encoding.Default.GetString(response);
             }
@@ -53,21 +55,24 @@ namespace rapid_auth_dll
             {
                 var values = new NameValueCollection();
                 values["api_key"] = API_KEY;
-                values["username"] = username;
-                values["password"] = password;
+                values["username"] = crypting.EncryptString(username);
+                values["password"] = crypting.EncryptString(password);
 
                 //HWID
-                values["windows_username"] = Environment.UserName;
-                values["gpu_name"] = hwid.gpu()[0];
-                values["gpu_ram"] = hwid.gpu()[1];
-                values["drive_count"] = hwid.drive_count().ToString();
-                values["cpu_name"] = hwid.cpu()[0];
-                values["cpu_cores"] = hwid.cpu()[1];
-                values["os_caption"] = hwid.os_info()[0];
-                values["os_serial_number"] = hwid.os_info()[1];
+                values["windows_username"] = crypting.EncryptString(Environment.UserName);
+
+                values["gpu_name"] = crypting.EncryptString(hwid.gpu()[0]);
+
+                values["gpu_ram"] = crypting.EncryptString(hwid.gpu()[1]);
+
+                values["drive_count"] = crypting.EncryptString(hwid.drive_count().ToString());
+                values["cpu_name"] = crypting.EncryptString(hwid.cpu()[0]);
+                values["cpu_cores"] = crypting.EncryptString(hwid.cpu()[1]);
+                values["os_caption"] = crypting.EncryptString(hwid.os_info()[0]);
+                values["os_serial_number"] = crypting.EncryptString(hwid.os_info()[1]);
 
 
-                var response = client.UploadValues("https://www.rapid-auth.pro/rapid_auth_api/loader_users/sign_up.php", values);
+                var response = client.UploadValues("http://localhost/rapid_auth_api/loader_users/sign_up.php", values);
 
                 response_string = Encoding.Default.GetString(response);
             }
@@ -82,13 +87,12 @@ namespace rapid_auth_dll
             {
                 var values = new NameValueCollection();
                 values["api_key"] = API_KEY;
-                values["username"] = username;
-                values["password"] = password;
+                values["username"] = crypting.EncryptString(username);
+                values["password"] = crypting.EncryptString(password);
 
 
-                var response = client.UploadValues("https://www.rapid-auth.pro/rapid_auth_api/loader_users/get_active_keys.php", values);
-
-                response_string = Encoding.Default.GetString(response);
+                var response = client.UploadValues("http://localhost/rapid_auth_api/loader_users/get_active_keys.php", values);
+                response_string = crypting.DecryptString(Encoding.Default.GetString(response));
             }
 
             return response_string;
@@ -101,13 +105,13 @@ namespace rapid_auth_dll
             {
                 var values = new NameValueCollection();
                 values["api_key"] = API_KEY;
-                values["username"] = username;
-                values["password"] = password;
-                values["license_key"] = license_key;
+                values["username"] = crypting.EncryptString(username);
+                values["password"] = crypting.EncryptString(password);
+                values["license_key"] = crypting.EncryptString(license_key);
 
-                var response = client.UploadValues("https://www.rapid-auth.pro/rapid_auth_api/loader_users/redeem_key.php", values);
+                var response = client.UploadValues("http://localhost/rapid_auth_api/loader_users/redeem_key.php", values);
 
-                response_string = Encoding.Default.GetString(response);
+                response_string = crypting.DecryptString(Encoding.Default.GetString(response));
             }
 
             return response_string;
