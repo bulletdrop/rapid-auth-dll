@@ -74,6 +74,9 @@
     <Compile Include="hwid.cs" />
     <Compile Include="rapid_auth.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RNCryptor\Cryptor.cs" />
+    <Compile Include="RNCryptor\Decryptor.cs" />
+    <Compile Include="RNCryptor\encryptor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

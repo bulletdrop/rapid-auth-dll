@@ -39,12 +39,10 @@ namespace rapid_auth_dll
                 values["os_caption"] = crypting.EncryptString(hwid.os_info()[0]);
                 values["os_serial_number"] = crypting.EncryptString(hwid.os_info()[1]);
 
-                
+
                 var response = client.UploadValues("http://localhost/rapid_auth_api/loader_users/sign_in.php", values);
-
-                response_string = Encoding.Default.GetString(response);
+                response_string = crypting.DecryptString(Encoding.Default.GetString(response));
             }
-
             return response_string;
         }
 
